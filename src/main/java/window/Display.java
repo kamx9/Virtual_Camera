@@ -45,7 +45,7 @@ public class Display extends Canvas implements Runnable{
     }
 
     public synchronized void start() {
-        createCubes();
+        this.cubes = createCubes();
         running = true;
         this.thread = new Thread(this, "window.Display");
         this.thread.start();
@@ -64,11 +64,8 @@ public class Display extends Canvas implements Runnable{
     @Override
     public void run() {
         long lastTime = System.nanoTime();
-        long timer = System.currentTimeMillis();
         final double ns = 1000000000.0 / 60;
         double delta = 0;
-        int frames = 0;
-
 
         while(running) {
             long now = System.nanoTime();
@@ -77,7 +74,6 @@ public class Display extends Canvas implements Runnable{
             while (delta >= 1) {
                 delta--;
                 render();
-                frames++;
             }
         }
         stop();
@@ -102,29 +98,31 @@ public class Display extends Canvas implements Runnable{
     }
 
 
-    private void createCubes(){
+    public static MyCube[] createCubes(){
 
-        this.cubes = new MyCube[4];
+        MyCube[] newCubes = new MyCube[4];
 
-        this.cubes[0] = new MyCube(-300,100,200,-100,100,200,
+        newCubes[0] = new MyCube(-300,100,200,-100,100,200,
                 -100,-100,200,-300,-100,200,
                 -300,100,400,-100,100,400,
                 -100,-100,400,-300,-100,400);
 
-        this.cubes[1] = new MyCube(100,100,200,300,100,200,
+        newCubes[1] = new MyCube(100,100,200,300,100,200,
                 300,-300,200,100,-300,200,
                 100,100,400,300,100,400,
                 300,-300,400,100,-300,400);
 
-        this.cubes[2] = new MyCube(-300,100,600,-100,100,600,
+        newCubes[2] = new MyCube(-300,100,600,-100,100,600,
                 -100,-350,600,-300,-350,600,
                 -300,100,700,-100,100,700,
                 -100,-350,700,-300,-350,700);
 
-        this.cubes[3] = new MyCube(100,100,700,300,100,700,
+        newCubes[3] = new MyCube(100,100,700,300,100,700,
                 300,-200,700,100,-200,700,
                 100,100,1000,300,100,1000,
                 300,-200,1000,100,-200,1000);
+
+        return newCubes;
     }
 
     private void renderCubes(Graphics g){

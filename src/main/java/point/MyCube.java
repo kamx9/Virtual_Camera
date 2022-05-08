@@ -58,7 +58,7 @@ public class MyCube {
             }
 
         }
-        g.setColor(Color.BLUE);
+        g.setColor(Color.YELLOW);
         for (int i = 0; i < points.length/2; i++) {
             g.drawLine(points[i].x, points[i].y, points[i+4].x, points[i+4].y);
         }

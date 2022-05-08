@@ -38,7 +38,7 @@ public class Keyboard implements KeyListener {
             }
         }
 
-        if(e.getKeyCode() == KeyEvent.VK_SHIFT){
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
             for (MyCube c: Display.cubes) {
                 c.moveCubeY(false);
             }
@@ -91,6 +91,10 @@ public class Keyboard implements KeyListener {
                 c.zoom(false);
             }
         }
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+            Display.cubes = Display.createCubes();
+        }
+
     }
 
     @Override
