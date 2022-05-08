@@ -18,6 +18,8 @@ public class Display extends Canvas implements Runnable{
     public static boolean running = false;
     public static MyCube [] cubes;
 
+    public static Color[] colors;
+
     private Keyboard keyboard;
 
     public Display() {
@@ -47,6 +49,7 @@ public class Display extends Canvas implements Runnable{
     public synchronized void start() {
         this.cubes = createCubes();
         running = true;
+        this.colors = new Color[] {Color.BLACK, Color.WHITE, Color.YELLOW, Color.RED };
         this.thread = new Thread(this, "window.Display");
         this.thread.start();
         this.frame.addKeyListener(this.keyboard);
@@ -88,7 +91,7 @@ public class Display extends Canvas implements Runnable{
 
         Graphics g = bs.getDrawGraphics();
 
-        g.setColor(Color.BLACK);
+        g.setColor(colors[0]);
         g.fillRect(0,0, WIDTH * 2, HEIGHT * 2);
 
         renderCubes(g);

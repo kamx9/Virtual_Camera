@@ -1,5 +1,7 @@
 package point;
 
+import window.Display;
+
 import java.awt.*;
 
 public class MyCube {
@@ -32,7 +34,7 @@ public class MyCube {
     }
 
     public void render(Graphics g){
-        g.setColor(Color.WHITE);
+        g.setColor(Display.colors[1]);
 
         Point points[] = new Point[8];
 
@@ -48,7 +50,7 @@ public class MyCube {
             }
         }
 
-        g.setColor(Color.RED);
+        g.setColor(Display.colors[2]);
 
         for (int i = 4; i < points.length; i++) {
             if(i != 7) {
@@ -58,7 +60,7 @@ public class MyCube {
             }
 
         }
-        g.setColor(Color.YELLOW);
+        g.setColor(Display.colors[3]);
         for (int i = 0; i < points.length/2; i++) {
             g.drawLine(points[i].x, points[i].y, points[i+4].x, points[i+4].y);
         }

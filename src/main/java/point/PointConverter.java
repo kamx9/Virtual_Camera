@@ -24,10 +24,12 @@ public class PointConverter {
     public static MyPoint rotateAxisX(MyPoint p, boolean direct, double degrees){
 
         double radius = Math.sqrt(p.y*p.y + p.z*p.z);
-        double theta = Math.atan2(p.z, p.y);
-        theta += 2*Math.PI/360*degrees*(direct?-1:1);
-        double y = radius * Math.cos(theta);
-        double z = radius * Math.sin(theta);
+        double t = Math.atan2(p.z, p.y);
+
+        t += 2 * Math.PI / 360 * degrees * (direct?-1:1);
+
+        double y = radius * Math.cos(t);
+        double z = radius * Math.sin(t);
 
         return new MyPoint(p.x, y, z);
     }
@@ -35,10 +37,12 @@ public class PointConverter {
     public static MyPoint rotateAxisY(MyPoint p, boolean direct, double degrees){
 
         double radius = Math.sqrt(p.x*p.x + p.z*p.z);
-        double theta = Math.atan2(p.x, p.z);
-        theta += 2*Math.PI/360*degrees*(direct?-1:1);
-        double x = radius * Math.sin(theta);
-        double z = radius * Math.cos(theta);
+        double t = Math.atan2(p.x, p.z);
+
+        t += 2 * Math.PI / 360 * degrees * (direct?-1:1);
+
+        double x = radius * Math.sin(t);
+        double z = radius * Math.cos(t);
 
         return new MyPoint(x, p.y, z);
     }
@@ -46,10 +50,12 @@ public class PointConverter {
     public static MyPoint rotateAxisZ(MyPoint p, boolean direct, double degrees){
 
         double radius = Math.sqrt(p.y*p.y + p.x*p.x);
-        double theta = Math.atan2(p.y, p.x);
-        theta += 2*Math.PI/360*degrees*(direct?-1:1);
-        double y = radius * Math.sin(theta);
-        double x = radius * Math.cos(theta);
+        double t = Math.atan2(p.y, p.x);
+
+        t += 2 * Math.PI / 360 * degrees * (direct?-1:1);
+
+        double y = radius * Math.sin(t);
+        double x = radius * Math.cos(t);
 
         return new MyPoint(x, y, p.z);
     }

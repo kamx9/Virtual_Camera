@@ -2,6 +2,7 @@ package window;
 
 import point.MyCube;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -93,6 +94,15 @@ public class Keyboard implements KeyListener {
         }
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
             Display.cubes = Display.createCubes();
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_0){
+            if(Display.colors[0] == Color.BLACK){
+                Display.colors = new Color[]{Color.WHITE, Color.BLACK, Color.BLUE, Color.MAGENTA };
+            } else {
+                Display.colors = new Color[]{Color.BLACK, Color.WHITE, Color.YELLOW, Color.RED };
+            }
+
         }
 
     }
