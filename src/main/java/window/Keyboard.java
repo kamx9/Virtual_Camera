@@ -94,15 +94,24 @@ public class Keyboard implements KeyListener {
         }
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
             Display.cubes = Display.createCubes();
+            Display.scale = 1;
         }
 
         if(e.getKeyCode() == KeyEvent.VK_0){
             if(Display.colors[0] == Color.BLACK){
-                Display.colors = new Color[]{Color.WHITE, Color.BLACK, Color.BLUE, Color.MAGENTA };
+                Display.colors = new Color[]{Color.WHITE, Color.BLACK, Color.DARK_GRAY, Color.RED, Color.BLUE, Color.MAGENTA, Color.GREEN};
             } else {
-                Display.colors = new Color[]{Color.BLACK, Color.WHITE, Color.YELLOW, Color.RED };
+                Display.colors = new Color[]{Color.BLACK, Color.WHITE, Color.YELLOW, Color.RED, Color.BLUE, Color.MAGENTA, Color.GREEN };
             }
 
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_P){
+            if(Display.isPolygon){
+                Display.isPolygon = false;
+            } else {
+                Display.isPolygon = true;
+            }
         }
 
     }

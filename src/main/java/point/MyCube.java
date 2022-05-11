@@ -1,5 +1,6 @@
 package point;
 
+import polygons.MyPolygon;
 import window.Display;
 
 import java.awt.*;
@@ -10,7 +11,6 @@ public class MyCube {
 
     private static final int ROTATE = 2;
     private static final int MOVE = 10;
-    private double scale;
 
     public MyCube(double a1x, double a1y, double a1z,
                   double b1x, double b1y, double b1z,
@@ -21,7 +21,6 @@ public class MyCube {
                   double c2x, double c2y, double c2z,
                   double d2x, double d2y, double d2z){
 
-        this.scale = 1;
         this.myPoints = new MyPoint[8];
         this.myPoints[0] = new MyPoint(a1x,a1y,a1z);
         this.myPoints[1] = new MyPoint(b1x,b1y,b1z);
@@ -39,7 +38,7 @@ public class MyCube {
         Point points[] = new Point[8];
 
         for (int i = 0; i < this.myPoints.length; i++) {
-            points[i] = PointConverter.convertPerspectivePoint(this.myPoints[i], this.scale);
+            points[i] = PointConverter.convertPerspectivePoint(this.myPoints[i], Display.scale);
         }
 
         for (int i = 0; i < points.length/2; i++) {
@@ -66,6 +65,23 @@ public class MyCube {
         }
 
     }
+
+    public MyPolygon[] getPolygons(){
+        MyPolygon[] polygons = new MyPolygon[6];
+
+        for(int i = 0; i < 2; i++){
+            int k = i*4;
+            polygons[i] = new MyPolygon(i+1, this.myPoints[k], this.myPoints[k+1], this.myPoints[k+2], this.myPoints[k+3]);
+        }
+        for(int i = 0; i < 3; i++){
+            polygons[i+2] = new MyPolygon(i+3, this.myPoints[i], this.myPoints[i+1], this.myPoints[i+5], this.myPoints[i+4]);
+        }
+        polygons[5] = new MyPolygon(6, this.myPoints[0],this.myPoints[4], this.myPoints[7],this.myPoints[3]);
+
+        return polygons;
+    }
+
+
 
     public void rotateCubeX(boolean direct) {
         for (int i = 0; i < myPoints.length; i++) {
@@ -104,7 +120,12 @@ public class MyCube {
     }
 
     public void zoom(boolean in_out){ // true - in / false - out
-        this.scale = this.scale + (in_out? 0.1 : -0.1);
+        if(Display.scale >= 0.1 && in_out == false) {
+            Display.scale *= 0.95;
+        }
+        if(in_out == true){
+            Display.scale *= 1.05;
+        }
     }
 
 

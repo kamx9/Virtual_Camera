@@ -24,6 +24,7 @@ public class PointConverter {
     public static MyPoint rotateAxisX(MyPoint p, boolean direct, double degrees){
 
         double pz = p.z + d;
+
         double radius = Math.sqrt(p.y*p.y + pz*pz);
         double t = Math.atan2(pz, p.y);
 

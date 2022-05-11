@@ -1,10 +1,13 @@
 package window;
 
 import point.MyCube;
+import polygons.MyPolygon;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Display extends Canvas implements Runnable{
 
@@ -15,10 +18,12 @@ public class Display extends Canvas implements Runnable{
     private static String title = "Wirtualna kamera";
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
+    public static double scale;
     public static boolean running = false;
     public static MyCube [] cubes;
 
     public static Color[] colors;
+    public static boolean isPolygon = false;
 
     private Keyboard keyboard;
 
@@ -29,6 +34,7 @@ public class Display extends Canvas implements Runnable{
         this.setPreferredSize(size);
 
         this.keyboard = new Keyboard();
+        this.scale = 1;
 
         this.addKeyListener(this.keyboard);
     }
@@ -49,7 +55,7 @@ public class Display extends Canvas implements Runnable{
     public synchronized void start() {
         this.cubes = createCubes();
         running = true;
-        this.colors = new Color[] {Color.BLACK, Color.WHITE, Color.YELLOW, Color.RED };
+        this.colors = new Color[] {Color.BLACK, Color.WHITE, Color.YELLOW, Color.RED, Color.BLUE, Color.MAGENTA, Color.GREEN};
         this.thread = new Thread(this, "window.Display");
         this.thread.start();
         this.frame.addKeyListener(this.keyboard);
@@ -129,8 +135,33 @@ public class Display extends Canvas implements Runnable{
     }
 
     private void renderCubes(Graphics g){
-        for (MyCube c: this.cubes) {
-            c.render(g);
+
+        if(isPolygon == false){
+            for (MyCube c: this.cubes) {
+                c.render(g);
+            }
+        } else {
+            List<MyPolygon[]> allPolygonsCubes = new ArrayList<>();
+            for (MyCube c: this.cubes) {
+
+//                allPolygonsCubes.add(c.getPolygons());
+
+                MyPolygon[] tmp = c.getPolygons();
+                for (MyPolygon t: tmp) {
+                    allPolygonsCubes.add(MyPolygon.dividePolygon(t, t.getColorInt()));
+                }
+            }
+
+            MyPolygon[] result = MyPolygon.sortPolygons(allPolygonsCubes);
+
+            for (MyPolygon p : result) {
+                p.render(g);
+            }
+
+
+
+
+
         }
     }
 }
