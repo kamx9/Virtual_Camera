@@ -68,16 +68,6 @@ public class MyPolygon {
         return sum / this.points.length;
     }
 
-    public double getMaxZ() {
-        double max = 0;
-        for(MyPoint p : this.points) {
-            if(p.z > max){
-                max = p.z;
-            }
-        }
-        return max;
-    }
-
     public static MyPolygon[] sortPolygons(List<MyPolygon[]> polygons) {
         List<MyPolygon> polygonsList = new ArrayList<>();
 
@@ -90,17 +80,14 @@ public class MyPolygon {
         Collections.sort(polygonsList, new Comparator<MyPolygon>() {
             @Override
             public int compare(MyPolygon p1, MyPolygon p2) {
-                double diff = 0;
-                if(diff == 0) {
-                    double p2Average = Math.sqrt((Math.pow(p2.getAverageX(), 2)
-                                                   + Math.pow(p2.getAverageY(), 2)
-                                                   + Math.pow(p2.getAverageZ(), 2)));
-                    double p1Average = Math.sqrt((Math.pow(p1.getAverageX(), 2)
+
+                double p2Average = Math.sqrt((Math.pow(p2.getAverageX(), 2)
+                            + Math.pow(p2.getAverageY(), 2)
+                            + Math.pow(p2.getAverageZ(), 2)));
+                double p1Average = Math.sqrt((Math.pow(p1.getAverageX(), 2)
                             + Math.pow(p1.getAverageY(), 2)
                             + Math.pow(p1.getAverageZ(), 2)));
-                    diff = p2Average - p1Average;
-
-                }
+                double diff = p2Average - p1Average;
 
                 if(diff == 0) {
                     return 0;

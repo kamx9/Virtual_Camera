@@ -114,6 +114,24 @@ public class Keyboard implements KeyListener {
             }
         }
 
+        if(e.getKeyCode() == KeyEvent.VK_O){
+            if(Display.isDividePolygon){
+                Display.isDividePolygon = false;
+            } else {
+                Display.isDividePolygon = true;
+            }
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_Z){
+            if(Display.how){
+                Display.how = false;
+            } else {
+                Display.how = true;
+            }
+        }
+
+
+
     }
 
     @Override

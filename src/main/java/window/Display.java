@@ -25,6 +25,10 @@ public class Display extends Canvas implements Runnable{
     public static Color[] colors;
     public static boolean isPolygon = false;
 
+    public static boolean isDividePolygon = true;
+
+    public static boolean how = false; // tu zmienia się co ma być rysowane false -> dwie powierzchnie / true -> sześciany
+
     private Keyboard keyboard;
 
     public Display() {
@@ -109,29 +113,45 @@ public class Display extends Canvas implements Runnable{
 
     public static MyCube[] createCubes(){
 
-        MyCube[] newCubes = new MyCube[4];
+        if(how){
+            MyCube[] newCubes = new MyCube[4];
 
-        newCubes[0] = new MyCube(-300,100,200,-100,100,200,
-                -100,-100,200,-300,-100,200,
-                -300,100,400,-100,100,400,
-                -100,-100,400,-300,-100,400);
+            newCubes[0] = new MyCube(-300,100,200,-100,100,200,
+                    -100,-100,200,-300,-100,200,
+                    -300,100,400,-100,100,400,
+                    -100,-100,400,-300,-100,400, false);
 
-        newCubes[1] = new MyCube(100,100,200,300,100,200,
-                300,-300,200,100,-300,200,
-                100,100,400,300,100,400,
-                300,-300,400,100,-300,400);
+            newCubes[1] = new MyCube(100,100,200,300,100,200,
+                    300,-300,200,100,-300,200,
+                    100,100,400,300,100,400,
+                    300,-300,400,100,-300,400, false);
 
-        newCubes[2] = new MyCube(-300,100,600,-100,100,600,
-                -100,-350,600,-300,-350,600,
-                -300,100,700,-100,100,700,
-                -100,-350,700,-300,-350,700);
+            newCubes[2] = new MyCube(-300,100,600,-100,100,600,
+                    -100,-350,600,-300,-350,600,
+                    -300,100,700,-100,100,700,
+                    -100,-350,700,-300,-350,700, false);
 
-        newCubes[3] = new MyCube(100,100,700,300,100,700,
-                300,-200,700,100,-200,700,
-                100,100,1000,300,100,1000,
-                300,-200,1000,100,-200,1000);
+            newCubes[3] = new MyCube(100,100,700,300,100,700,
+                    300,-200,700,100,-200,700,
+                    100,100,1000,300,100,1000,
+                    300,-200,1000,100,-200,1000, false);
 
-        return newCubes;
+            return newCubes;
+        } else {
+            MyCube[] newCubes = new MyCube[2];
+
+            newCubes[0] = new MyCube(-100,-100,200,100,-100,200,
+                    100,-500,400,-100,-500,400,
+                    -100,-100,200,100,-100,200,
+                    100,-500,400,-100,-500,400, false); // ten zółty
+
+            newCubes[1] = new MyCube(-150,100,200,150,100,200,
+                    150,-300,400,-150,-300,400,
+                    -150,100,200,150,100,200,
+                    150,-300,400,-150,-300,400, true);  // ten niebieski
+            return newCubes;
+        }
+
     }
 
     private void renderCubes(Graphics g){
@@ -144,11 +164,13 @@ public class Display extends Canvas implements Runnable{
             List<MyPolygon[]> allPolygonsCubes = new ArrayList<>();
             for (MyCube c: this.cubes) {
 
-//                allPolygonsCubes.add(c.getPolygons());
-
-                MyPolygon[] tmp = c.getPolygons();
-                for (MyPolygon t: tmp) {
-                    allPolygonsCubes.add(MyPolygon.dividePolygon(t, t.getColorInt()));
+                if(isDividePolygon){
+                    MyPolygon[] tmp = c.getPolygons();
+                    for (MyPolygon t: tmp) {
+                        allPolygonsCubes.add(MyPolygon.dividePolygon(t, t.getColorInt()));
+                    }
+                } else {
+                    allPolygonsCubes.add(c.getPolygons());
                 }
             }
 
